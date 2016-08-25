@@ -25,23 +25,31 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     
     override func viewWillAppear(animated: Bool) {
-        print("Test View_will_appear")
         RecordText.text = "按一下開始錄音"
         
     }
     override func viewWillDisappear(animated: Bool) {
-        print("Testing View_will_disappear")
     }
+    // Should try to use if let
+    func recordStateChange( state:String ){
+        if state == "錄音完畢"{
+            Recording.enabled = true
+            StopRecording.enabled = false
+            RecordText.text = state
+        }
+        else{
+            StopRecording.enabled = true
+            Recording.enabled = false
+            RecordText.text = state
+        }
+    }
+    
     @IBAction func StopRecording(sender: AnyObject) {
-        Recording.enabled = true
-        StopRecording.enabled = false
-        print("錄音完畢")
-        RecordText.text = "錄音完畢"
+        recordStateChange("錄音完畢")
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
@@ -49,10 +57,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @IBAction func RecordAudio(sender: AnyObject) {
-            StopRecording.enabled = true
-            Recording.enabled = false
-            print("錄音中")
-            RecordText.text = "錄音中"
+        recordStateChange("錄音中")
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask, true)[0] as String
         let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
@@ -68,12 +73,14 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.prepareToRecord()
         audioRecorder.record()
     }
+    
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
-        if(flag){
-            self.performSegueWithIdentifier("stopRecording", sender: audioRecorder.url)
-           print("Record successful and finished")
+        if flag {
+            performSegueWithIdentifier("stopRecording", sender: audioRecorder.url)
+            print("Record successful and finished")
         }
         else{
+            RecordText.text = "Record finished but not successful"
             print("Record finished but not successful")
         }
     }

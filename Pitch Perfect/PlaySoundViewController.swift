@@ -29,7 +29,9 @@ class PlaySoundsViewController: UIViewController {
     
     var stopTimer: NSTimer!
     
-    enum ButtonType: Int{ case Slow = 0, Fast,Chipmunk, Vadar, Echo, Reverb}
+    enum ButtonType: Int{
+        case Slow = 0, Fast,Chipmunk, Vadar, Echo, Reverb
+    }
     
     
     @IBAction func playSoundForButton(sender: UIButton) {
@@ -64,15 +66,15 @@ class PlaySoundsViewController: UIViewController {
     }
 
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         configureUI(.NotPlaying)
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
         stopAudio()
     }
 
