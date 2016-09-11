@@ -63,6 +63,13 @@ class PlaySoundsViewController: UIViewController {
         super.viewDidLoad()
         print("PlaySoundViewController loaded")
         setupAudio()
+        EchoButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        ReverbButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        DarthVadarButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        ChipmunkButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        SnailButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        RabbitButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        StopButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
     }
 
     override func didReceiveMemoryWarning() {
